@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 // suite test (종합 테스트)
@@ -49,5 +50,33 @@ class ItemRepositoryTest {
         List<Item> itemList = repository.findByNameIsContainingIgnoreCase("상품1");
         assertEquals(2, itemList.size());
     }
+
+    @Test
+    @DisplayName("상품명과 상품상세설명에 대한 or 테스트")
+    void findByNameOrDescriptionTest() {
+        createItemList();
+        List<Item> itemList = repository.findByNameOrDescription("테스트 상품1", "테스트 상품 상세 설명7");
+        itemList.forEach(System.out::println);
+        assertEquals(2, itemList.size());
+    }
+
+    @Test
+    @DisplayName("가격 LessThan 테스트")
+    void findByPriceLessThanTest() {
+        createItemList();
+        List<Item> itemList = repository.findByPriceLessThan(10005);
+        itemList.forEach(System.out::println);
+        assertEquals(4, itemList.size());
+    }
+
+    @Test
+    @DisplayName("가격 LessThan, 가격 내림차순 테스트")
+    void findByPriceGreaterThanOrderByPriceDescTest() {
+        createItemList();
+        List<Item> itemList = repository.findByPriceGreaterThanOrderByPriceDesc(10005);
+        itemList.forEach(System.out::println);
+        assertEquals(5, itemList.size());
+    }
+
 
 }
