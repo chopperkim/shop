@@ -78,5 +78,14 @@ class ItemRepositoryTest {
         assertEquals(5, itemList.size());
     }
 
+    @Test
+    @DisplayName("@Query를 이용한 상품 조회 테스트")
+    void findByDescriptionTest() {
+        createItemList();
+        List<Item> itemList = repository.findByDescription("테스트 상품 상세 설명");
+        itemList.forEach(System.out::println);
+        assertEquals(10, itemList.size());
+    }
+
 
 }

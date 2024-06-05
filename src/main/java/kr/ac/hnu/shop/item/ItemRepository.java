@@ -2,6 +2,7 @@ package kr.ac.hnu.shop.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     // @Query을 이용한 JPQL(java persistence query language)
     // 파라미터로 넘어온 값이 상품 상세 설명에 포함되어 있는 상품을 조회, 단 상품 가격이 높은 순으로 조회
-    @Query("")
-    List<Item> findByDescription(String description);
+    // select * from item where description like '%?%' order by price desc
+    @Query("select i from Item i where i.description like %:description% order by i.price desc")
+    List<Item> findByDescription(@Param("description") String description);
 }
