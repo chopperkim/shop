@@ -16,7 +16,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 로그인, 로그아웃 인증(Authentication)관련 설정
         // 인가, 허가(Authority)
-        return http.build();
+        return http
+                .formLogin(
+                        c -> c
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/")
+                                .usernameParameter("email")
+                                .failureUrl("/login")
+                )
+                .build();
     }
 
     // 패스워드 암호화 방법 결정
