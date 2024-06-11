@@ -89,10 +89,11 @@
 
 <header th:replace="~{fragments/header::header}"></header>
 <main class="container">
-    <form th:action="@{/members/new}" th:method="post">
+    <form th:action="@{/members/new}" th:method="post" th:object="${memberForm}">
         <div class="form-floating my-3">
             <input type="text" class="form-control" id="name" name="name" placeholder="홍길동">
             <label for="name">이름을 입력해주세요.</label>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">이름 에러</p>
         </div>
         <div class="form-floating my-3">
             <input type="email" class="form-control" id="email" name="email" placeholder="hong@gmail.com">
